@@ -5,17 +5,22 @@ import './Gif.scss';
 import User from '../../images/user.svg';
 
 
-const Gif = ({ url, user, refData }) => {
+const Gif = ({ data, refData, gifClass, onClick, closeImage }) => {
+    const onCloseImage = (e) => {
+        e.stopPropagation();
+        closeImage();
+    }
     return (
-        <div className="gif" ref={refData}>
+        <div onClick={onClick} className={`gif ${gifClass}`} ref={refData}>
             <div className="gif__img-container">
-                <img alt={user.display_name ? user.display_name : 'No data'} src={url} alt="" />
+                <span className="close-btn" onClick={onCloseImage}></span>
+                <img alt={data.user ? data.user.display_name : 'No data'} src={data.url} alt="" />
             </div>
 
             <div className="gif__user-info">
-                <img alt={user.display_name ? user.display_name : 'No data'} src={user.avatar_url ? user.avatar_url : User} alt="" />
+                <img alt={data.user ? data.user.display_name : 'No data'} src={data.user ? data.user.avatar_url : User} alt="" />
                 <span className="gif__user-name">
-                    {user.display_name ? user.display_name : 'No data'}
+                    {data.user ? data.user.display_name : 'No data'}
                 </span>
             </div>
             <span className="gif__animation first"></span>
@@ -27,15 +32,17 @@ const Gif = ({ url, user, refData }) => {
 };
 
 Gif.propTypes = {
-    url: PropTypes.string.isRequired,
-    user: PropTypes.object,
+    data: PropTypes.object,
     refData: PropTypes.any,
+    gifClass: PropTypes.string,
+    onClick: PropTypes.func,
+    closeImage: PropTypes.func,
 }
 
 Gif.defaultProps = {
-    url: '',
-    user: {},
-    refData: undefined
+    data: {},
+    refData: undefined,
+    gifClass: '',
 }
 
 export default Gif;
