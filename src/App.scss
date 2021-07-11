@@ -6,13 +6,9 @@
   max-height: 100vh;
   height: 100vh;
   padding: 1rem;
-  &.full-image {
-    // overflow: hidden;
-  }
-
-  // display: grid;
-  // grid-template-columns: repeat(2, 1fr);
 }
+
+// Responsive for Mobile, Table, Desktop
 @include media-sm {
   .app {
     display: grid;
@@ -30,6 +26,7 @@
     grid-gap: 1rem;
   }
 }
+
 @include media-lg {
   .app {
     display: grid;

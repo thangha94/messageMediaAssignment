@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import './Gif.scss';
 import User from '../../images/user.svg';
 
-
 const Gif = ({ data, refData, gifClass, onClick, closeImage }) => {
     const onCloseImage = (e) => {
         e.stopPropagation();

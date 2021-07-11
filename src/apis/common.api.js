@@ -6,7 +6,6 @@ export const getImageList = async (pageNumber) => {
         if (pageNumber !== 1) {
             offset = (pageNumber - 1) * LIMIT_QUERY + 1;
         }
-        console.log(offset);
         let result = await axiosFetch.get('', {
             params: {
                 api_key: API_KEY,

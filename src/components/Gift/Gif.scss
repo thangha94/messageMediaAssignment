@@ -44,21 +44,21 @@
           border: 2px solid white;
         }
         &:before {
+          position: absolute;
           content: '';
           width: 15px;
           height: 2px;
           background: white;
-          position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%) rotate(45deg);
         }
         &:after {
+          position: absolute;
           content: '';
           width: 15px;
           height: 2px;
           background: white;
-          position: absolute;
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%) rotate(-45deg);
@@ -117,60 +117,56 @@
   .gif__animation {
     position: absolute;
     display: block;
-  }
-  .gif__animation.first {
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: $widthAnimation;
-    background: linear-gradient(90deg, transparent, $colorAnimation);
-  }
-  &:hover {
-    .gif__animation.first {
-      left: 100%;
-      transition: 1s;
+    &.first {
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: $widthAnimation;
+      background: linear-gradient(90deg, transparent, $colorAnimation);
+    }
+    &.second {
+      top: -100%;
+      right: 0;
+      width: $widthAnimation;
+      height: 100%;
+      background: linear-gradient(180deg, transparent, $colorAnimation);
+    }
+    &.third {
+      bottom: 0;
+      right: -100%;
+      width: 100%;
+      height: $widthAnimation;
+      background: linear-gradient(270deg, transparent, $colorAnimation);
+    }
+    &.fourth {
+      bottom: -100%;
+      left: 0;
+      width: $widthAnimation;
+      height: 100%;
+      background: linear-gradient(360deg, transparent, $colorAnimation);
     }
   }
-  .gif__animation.third {
-    bottom: 0;
-    right: -100%;
-    width: 100%;
-    height: $widthAnimation;
-    background: linear-gradient(270deg, transparent, $colorAnimation);
-  }
   &:hover {
-    .gif__animation.third {
-      right: 100%;
-      transition: 1s;
-      transition-delay: 0.5s;
-    }
-  }
-  .gif__animation.second {
-    top: -100%;
-    right: 0;
-    width: $widthAnimation;
-    height: 100%;
-    background: linear-gradient(180deg, transparent, $colorAnimation);
-  }
-  &:hover {
-    .gif__animation.second {
-      top: 100%;
-      transition: 1s;
-      transition-delay: 0.25s;
-    }
-  }
-  .gif__animation.fourth {
-    bottom: -100%;
-    left: 0;
-    width: $widthAnimation;
-    height: 100%;
-    background: linear-gradient(360deg, transparent, $colorAnimation);
-  }
-  &:hover {
-    .gif__animation.fourth {
-      bottom: 100%;
-      transition: 1s;
-      transition-delay: 0.75s;
+    .gif__animation {
+      &.first {
+        left: 100%;
+        transition: 1s;
+      }
+      &.third {
+        right: 100%;
+        transition: 1s;
+        transition-delay: 0.5s;
+      }
+      &.second {
+        top: 100%;
+        transition: 1s;
+        transition-delay: 0.25s;
+      }
+      &.fourth {
+        bottom: 100%;
+        transition: 1s;
+        transition-delay: 0.75s;
+      }
     }
   }
 }

@@ -1,33 +1,50 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 
 import Gif from './components/Gift/Gif';
 import './App.scss';
-import { getImageList } from './apis/common.api';
-import useGifSearch from './customHook/useGifSearch';
 import Loading from './components/Loading/Loading';
+import { useDispatch, useSelector } from 'react-redux';
+import { getGifDataSaga } from './redux/actions/gidData.action';
 
 function App() {
   const [pageNumber, setPageNumber] = useState(1);
   const [selectedIndex, setSelectedIndex] = useState(false);
-  const observer = useRef();
+  const [loading, setLoading] = useState(false);
 
-  let { gifData, loading, error, hasMore } = useGifSearch(pageNumber)
+  const gifData = useSelector(state => state.gifData.data ? state.gifData.data : []);
+  const loadMore = useSelector(state => state.gifData.loadMore)
+  const dispatch = useDispatch();
+
+  const observer = useRef();
 
   // Observe the last element to load more item
   const lastGifElement = useCallback((node) => {
-    // Do not anything when loading
     if (loading) return;
     // Do not observe the changes of the previous IntersectionObserver 
     if (observer.current) observer.current.disconnect();
     // Set the ref by a new IntersectionObserver
     observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
+      // ensure that can load more
+      if (entries[0].isIntersecting && loadMore) {
         setPageNumber(pre => pre + 1);
       }
     })
     // Add the element for observing
     if (node) observer.current.observe(node)
-  }, [loading, hasMore])
+  }, [loading, loadMore])
+
+  useEffect(() => {
+    setLoading(true);
+    dispatch(getGifDataSaga(pageNumber));
+  }, [pageNumber])
+
+  useEffect(() => {
+    // close loading once received new gifData
+    // the loading will last in 1s
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000)
+  }, [JSON.stringify(gifData)])
 
   const getClassName = (index) => {
     if (index === selectedIndex) {
@@ -36,13 +53,38 @@ function App() {
     return '';
   }
 
+  const closeFullScreen = (e) => {
+    if (e.code === 'Escape' && selectedIndex !== false) {
+      setSelectedIndex(false);
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', closeFullScreen);
+    return () => {
+      document.removeEventListener('keydown', closeFullScreen);
+    }
+  }, [selectedIndex])
+
   return (
-    <div className={`app ${selectedIndex && 'full-image'}`}>
-      {gifData.map((item, index) => {
+    <div className="app">
+      {gifData && gifData.map((item, index) => {
         if (gifData.length === index + 1) {
-          return <Gif closeImage={() => setSelectedIndex(false)} onClick={() => { setSelectedIndex(index); console.log('clicked') }} gifClass={getClassName(index)} key={`gif_${index}`} refData={lastGifElement} data={item} />
+          // trigger function infinite scroll, load more data
+          return <Gif
+            closeImage={() => setSelectedIndex(false)}
+            onClick={() => { setSelectedIndex(index); }}
+            gifClass={getClassName(index)}
+            key={`gif_${index}`}
+            refData={lastGifElement}
+            data={item} />
         } else {
-          return <Gif closeImage={() => setSelectedIndex(false)} onClick={() => { setSelectedIndex(index); console.log('clicked') }} gifClass={getClassName(index)} key={`gif_${index}`} data={item} />
+          // without function infinite scroll
+          return <Gif
+            closeImage={() => setSelectedIndex(false)}
+            onClick={() => setSelectedIndex(index)}
+            gifClass={getClassName(index)}
+            key={`gif_${index}`} data={item} />
         }
       })}
       <Loading loading={loading} />
