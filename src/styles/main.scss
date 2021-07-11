@@ -1,0 +1,19 @@
+@import './config';
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  background-color: $backgroundColorMain;
+  font-size: 14px;
+  font-family: system-ui;
+
+  // max-height: 100vh;
+  // height: 100vh;
+  // overflow: auto;
+  // #root {
+  //   max-height: 100vh;
+  //   height: 100vh;
+  // }
+}

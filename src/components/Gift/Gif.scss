@@ -1,0 +1,120 @@
+@import '../../styles/config';
+/* autoprefixer grid: autoplace */
+.gif {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: space-between;
+  overflow: hidden;
+
+  position: relative;
+  height: 200px;
+  padding: 0.4rem;
+  cursor: pointer;
+
+  .gif__img-container {
+    background-color: $backgroundColorItem;
+    width: 100%;
+    height: calc(200px - 2rem);
+    min-height: calc(200px - 2rem);
+    padding: 0.5rem;
+    border-radius: 2px;
+
+    > img {
+      width: 100%;
+      height: calc(100%);
+      border-radius: 2px;
+    }
+  }
+
+  .gif__user-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    height: 2rem;
+    min-height: 2rem;
+    padding: 0.5rem;
+
+    > img {
+      height: 1.4rem;
+      width: 1.4rem;
+      border-radius: 50%;
+      border: 2px solid $backgroundColorItem;
+    }
+
+    .gif__user-name {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      color: $colorUserTitle;
+      font-weight: 500;
+      margin-left: 0.2rem;
+    }
+  }
+
+  // Handle Animation
+  $colorAnimation: $colorUserTitle;
+  $widthAnimation: 0.2rem;
+  .gif__animation {
+    position: absolute;
+    display: block;
+  }
+  .gif__animation.first {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: $widthAnimation;
+    background: linear-gradient(90deg, transparent, $colorAnimation);
+  }
+  &:hover {
+    .gif__animation.first {
+      left: 100%;
+      transition: 1s;
+    }
+  }
+  .gif__animation.third {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: $widthAnimation;
+    background: linear-gradient(270deg, transparent, $colorAnimation);
+  }
+  &:hover {
+    .gif__animation.third {
+      right: 100%;
+      transition: 1s;
+      transition-delay: 0.5s;
+    }
+  }
+  .gif__animation.second {
+    top: -100%;
+    right: 0;
+    width: $widthAnimation;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, $colorAnimation);
+  }
+  &:hover {
+    .gif__animation.second {
+      top: 100%;
+      transition: 1s;
+      transition-delay: 0.25s;
+    }
+  }
+  .gif__animation.fourth {
+    bottom: -100%;
+    left: 0;
+    width: $widthAnimation;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, $colorAnimation);
+  }
+  &:hover {
+    .gif__animation.fourth {
+      bottom: 100%;
+      transition: 1s;
+      transition-delay: 0.75s;
+    }
+  }
+}
