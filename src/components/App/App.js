@@ -1,10 +1,10 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 
-import Gif from './components/Gift/Gif';
+import Gif from '../Gif/Gif';
 import './App.scss';
-import Loading from './components/Loading/Loading';
+import Loading from '../Loading/Loading';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGifDataSaga } from './redux/actions/gidData.action';
+import { getGifDataSaga } from '../../redux/actions/gifData.action';
 
 function App() {
   const [pageNumber, setPageNumber] = useState(1);
@@ -34,11 +34,16 @@ function App() {
   }, [loading, loadMore])
 
   useEffect(() => {
-    setLoading(true);
-    dispatch(getGifDataSaga(pageNumber));
+    let mounted = true;
+    if (mounted) {
+      setLoading(true);
+      dispatch(getGifDataSaga(pageNumber));
+    }
+    return () => mounted = false;
   }, [pageNumber])
 
   useEffect(() => {
+    console.log(gifData);
     // close loading once received new gifData
     // the loading will last in 1s
     setTimeout(() => {
@@ -67,13 +72,13 @@ function App() {
   }, [selectedIndex])
 
   return (
-    <div className="app">
+    <div data-testid="app" className="app">
       {gifData && gifData.map((item, index) => {
         if (gifData.length === index + 1) {
           // trigger function infinite scroll, load more data
           return <Gif
-            closeImage={() => setSelectedIndex(false)}
-            onClick={() => { setSelectedIndex(index); }}
+            onCloseFullScreen={() => setSelectedIndex(false)}
+            onOpenFullScreen={() => { setSelectedIndex(index); }}
             gifClass={getClassName(index)}
             key={`gif_${index}`}
             refData={lastGifElement}
@@ -81,10 +86,11 @@ function App() {
         } else {
           // without function infinite scroll
           return <Gif
-            closeImage={() => setSelectedIndex(false)}
-            onClick={() => setSelectedIndex(index)}
+            onCloseFullScreen={() => setSelectedIndex(false)}
+            onOpenFullScreen={() => setSelectedIndex(index)}
             gifClass={getClassName(index)}
-            key={`gif_${index}`} data={item} />
+            key={`gif_${index}`}
+            data={item} />
         }
       })}
       <Loading loading={loading} />

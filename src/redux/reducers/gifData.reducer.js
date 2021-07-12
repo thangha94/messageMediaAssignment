@@ -1,5 +1,5 @@
 import * as types from '../types';
-const initialState = {
+export const initialState = {
     data: [],
     loadMore: true
 };

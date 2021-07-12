@@ -4,15 +4,15 @@ import PropTypes from 'prop-types';
 import './Gif.scss';
 import User from '../../images/user.svg';
 
-const Gif = ({ data, refData, gifClass, onClick, closeImage }) => {
+const Gif = ({ data, refData, gifClass, onOpenFullScreen, onCloseFullScreen }) => {
     const onCloseImage = (e) => {
         e.stopPropagation();
-        closeImage();
+        onCloseFullScreen();
     }
     return (
-        <div onClick={onClick} className={`gif ${gifClass}`} ref={refData}>
+        <div data-testid="gif" onClick={onOpenFullScreen} className={`gif ${gifClass}`} ref={refData}>
             <div className="gif__img-container">
-                <span className="close-btn" onClick={onCloseImage}></span>
+                <span data-testid="gif-close" className="close-btn" onClick={onCloseImage}></span>
                 <img alt={data.user ? data.user.display_name : 'No data'} src={data.url} alt="" />
             </div>
 
@@ -34,8 +34,8 @@ Gif.propTypes = {
     data: PropTypes.object,
     refData: PropTypes.any,
     gifClass: PropTypes.string,
-    onClick: PropTypes.func,
-    closeImage: PropTypes.func,
+    onOpenFullScreen: PropTypes.func,
+    onCloseFullScreen: PropTypes.func,
 }
 
 Gif.defaultProps = {
