@@ -1,7 +1,9 @@
 THIS IS AN ASSIGNMENT FOR MESSAGE MEDIA
+
 DEV: HA VAN THANG
 
 DEPLOYED AT: http://assignment.hathang.online/
+
 NOTE: the images are called from https://giphy.com/
 
 1. USAGE
