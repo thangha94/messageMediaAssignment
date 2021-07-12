@@ -1,13 +1,14 @@
-import axios from "axios";
 jest.unmock('axios');
+import axios from "axios";
 import MockAdapter from 'axios-mock-adapter';
+import { API_URL } from "../../../define";
 
 // This sets the mock adapter on the default instance
 const mock = new MockAdapter(axios);
 
 // Mock any GET request to /users
 // arguments for reply are (status, data, headers)
-mock.onGet("https://api.giphy.com/v1/gifs/trending").reply(200, {
+mock.onGet(API_URL).reply(200, {
     data: [
         {
             type: "gif",

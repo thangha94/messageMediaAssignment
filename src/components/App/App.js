@@ -43,7 +43,6 @@ function App() {
   }, [pageNumber])
 
   useEffect(() => {
-    console.log(gifData);
     // close loading once received new gifData
     // the loading will last in 1s
     setTimeout(() => {
