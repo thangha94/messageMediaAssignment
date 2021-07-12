@@ -1,4 +1,4 @@
-import { act, cleanup, fireEvent, queryAllByTestId, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import 'intersection-observer';
 import App from '../App';
